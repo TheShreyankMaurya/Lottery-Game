@@ -1,21 +1,23 @@
 import { useState } from "react";
 import { genArr, sum } from "./helper";
+import Ticket from "./Ticket";
 
-function Lottery() {
-    let [ticket, setTicket] = useState(genArr(3));
-    let isWin = sum(ticket) === 15;
+function Lottery({ n, winCondition }) {
+    let [ticket, setTicket] = useState(genArr(n));
+    let isWin = winCondition(ticket);
 
+    function buyTicket() {
+        setTicket(genArr(n));
+    }
     return (
         <div>
             <h1>Lottery Game</h1>
 
-            <div>
-                <span>{ticket[0]}</span>
-                <span>{ticket[1]}</span>
-                <span>{ticket[2]}</span>
-            </div>
+            <Ticket ticket={ticket}></Ticket>
+
             <h3>{isWin && "Congratulations, You Won!"}</h3>
-            <button>Get New Ticket</button>
+
+            <button onClick={buyTicket}>Get New Ticket</button>
         </div>
     );
 }
